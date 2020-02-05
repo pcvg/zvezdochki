@@ -12,7 +12,7 @@
     "eslint": "./node_modules/.bin/eslint src",
     "stylelint": "./node_modules/.bin/stylelint src",
     "lint": "yarn eslint && yarn stylelint",
-    "test": "mocha"
+    "test": "mocha tests"
   },
   "husky": {
     "hooks": {
