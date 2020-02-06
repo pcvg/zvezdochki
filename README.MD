@@ -1,4 +1,5 @@
-# SU Star Rating
+# Zvezdochki :star: :star: :star: :star: :star:
+ (from Russian - _tiny stars_.)
 
 The component for easy creation of star rating components
 
@@ -27,4 +28,4 @@ Instructions how to run tests
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details
+This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE.md) file for details

@@ -1,11 +1,11 @@
 {
-  "name": "@pcvg/star-rating",
+  "name": "@pcvg/zvezdochki",
   "version": "1.0.0",
   "description": "The component for easy creation of star rating components",
   "main": "index.js",
-  "repository": "https://github.com/pcvg/star-rating",
+  "repository": "https://github.com/pcvg/zvezdochki",
   "author": "Savings United GmbH",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "private": false,
   "scripts": {
     "dev": "parcel src/index.html",
