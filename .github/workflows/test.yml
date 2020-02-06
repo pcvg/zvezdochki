@@ -2,9 +2,8 @@ name: Test
 on: push
 jobs:
   test:
-    name: Test
+    name: Run tests
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     steps:
       - uses: actions/checkout@master
       - name: Install dependencies
@@ -12,15 +11,29 @@ jobs:
       - name: Run test
         run: npm test
       - name: Notify
-        if: always()
+        if: failure()
         uses: pcvg/slack-notification-action@master
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
           JOB_STATUS: ${{ job.status }}
-          TITLE_MSG_SUCCESS: "Test completed!"
-          TITLE_MSG_FAIL: "Workflow failed!"
-          TITLE_MSG_CANCELLED: "Workflow canceled!"
+          TITLE_MSG_FAIL: "Workflow failed - Tests!"
           URL_WORKFLOW: "https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks"
-          FOOTER_MSG_SUCCESS: "${{ github.actor }}'s test was completed in <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
           FOOTER_MSG_FAIL: "Failed - ${{ github.actor }}'s workflow in <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
-          FOOTER_MSG_CANCELLED: "${{ github.actor }}'s workflow cancelled in <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
+  linters:
+    name: Run linters
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Install dependencies
+        run: yarn
+      - name: Run linters
+        run: yarn lint
+      - name: Notify
+        if: failure()
+        uses: pcvg/slack-notification-action@master
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          JOB_STATUS: ${{ job.status }}
+          TITLE_MSG_FAIL: "Workflow failed - Linters!"
+          URL_WORKFLOW: "https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks"
+          FOOTER_MSG_FAIL: "Failed - ${{ github.actor }}'s workflow in <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
