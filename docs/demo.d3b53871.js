@@ -5,4 +5,4 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
 },{"./index.scss":"LLHV"}],"lgAh":[function(require,module,exports) {
 "use strict";require("./demo.scss");var e=r(require("./index"));function r(e){return e&&e.__esModule?e:{default:e}}var t=new e.default(".star-rating");
 },{"./demo.scss":"LLHV","./index":"Focm"}]},{},["lgAh"], null)
-//# sourceMappingURL=/demo.eee21a8e.js.map
+//# sourceMappingURL=/zvezdochki/demo.d3b53871.js.map
