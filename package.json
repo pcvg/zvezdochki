@@ -9,20 +9,26 @@
   "private": false,
   "scripts": {
     "dev": "parcel src/index.html",
+    "build": "del-cli dist/* && parcel build src/index.html --public-url /zvezdochki --no-content-hash",
     "eslint": "./node_modules/.bin/eslint src",
     "stylelint": "./node_modules/.bin/stylelint src",
     "lint": "yarn eslint && yarn stylelint",
-    "test": "mocha tests"
+    "test": "mocha tests",
+    "deploy": "yarn build && gh-pages -d dist"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint"
+      "pre-commit": "yarn lint && yarn build",
+      "post-commit": "yarn deploy"
     }
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "del-cli": "^3.0.0",
     "eslint": "^6.8.0",
+    "gh-pages": "^2.2.0",
     "husky": "^4.2.1",
+    "microlight": "^0.0.7",
     "mocha": "^7.0.1",
     "node-sass": "^4.13.1",
     "parcel": "^1.12.4",

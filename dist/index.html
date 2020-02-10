@@ -1,15 +1,27 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>SU Star Rating Component Demo</title>
-<link rel="stylesheet" href="/src.e31bb0bc.css"></head>
-<body>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><title>SU Star Rating Component Demo</title><link rel="stylesheet" href="/zvezdochki/demo.d3b53871.css"></head><body>
+<div class="header"> <span class="header__title">Zvezdochki</span>
+</div>
+<aside class="sidebar"> <div class="row"> <nav> <ul class="nav"> <li class="nav__el"> <a href="#intro">Introduction</a> </li> <li class="nav__el"> <a href="">Basic usage</a> </li> <li class="nav__el"> <a href="">Advance usage</a> </li> <li class="nav__el"> <a href="">Styling</a> </li> <li class="nav__el"><a href=""></a></li> </ul> </nav> </div>
+</aside>
+<main> <div class="container"> <div class="row"> <h1 id="intro">Introduction</h1> <p> Zvezdochki can be used for creating various types of rating components on your pages. It's lightweight, fast and modular component with schema.org compatibility. </p> </div> <div class="row"> <div class="col-50"> <h2> Basic usage </h2> <div class="star-rating star-rating--basic" data-ratingValue="4"> <ul class="star-rating__list"> <li data-star="5"></li> <li data-star="4"></li> <li data-star="3"></li> <li data-star="2"></li> <li data-star="1"></li> </ul> </div> </div> <div class="col-50"> <h5>Events</h5> <pre>
+  <code class="microlight output1">
+  </code>
+        </pre> </div> <div class="col-100"> <h5>HTML</h5> <pre>
+  <code class="microlight">
+  &lt;div class=&quot;star-rating star-rating--basic&quot; data-ratingValue=&quot;4&quot;&gt;
+    &lt;ul class=&quot;star-rating__list&quot;&gt;
+      &lt;li data-star=&quot;5&quot;&gt;&lt;/li&gt;
+      &lt;li data-star=&quot;4&quot;&gt;&lt;/li&gt;
+      &lt;li data-star=&quot;3&quot;&gt;&lt;/li&gt;
+      &lt;li data-star=&quot;2&quot;&gt;&lt;/li&gt;
+      &lt;li data-star=&quot;1&quot;&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  </code>
+      </pre> </div> <div class="col-100"> <h5>JS</h5> <pre>
+  <code class="microlight">
+  import Zvezdochki from "zvezdochki";
 
-
-<script src="/src.e31bb0bc.js"></script>
-
-</body>
-</html>
+  let rating = new zvezdochki(".star-rating");
+  </code>
+    </pre> </div> </div> </div> </main> <script src="/zvezdochki/demo.d3b53871.js"></script> </body></html>
