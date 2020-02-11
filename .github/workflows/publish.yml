@@ -1,0 +1,66 @@
+name: Publish
+on:
+  push:
+    tags:
+       - '*'
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Install dependencies
+        run: yarn
+      - name: Run test
+        run: yarn test
+  linters:
+    name: Run linters
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Install dependencies
+        run: yarn
+      - name: Run linters
+        run: yarn lint
+  publish:
+    name: Publish
+    needs: [test,linters]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1.1.0
+        with:
+          node-version: '12.x'
+          registry-url: https://registry.npmjs.org/
+      - run: yarn
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+  notify-success:
+    name: Notify-Success
+    needs: [publish]
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify
+        uses: pcvg/slack-notification-action@master
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          JOB_STATUS: Success
+          TITLE_MSG_SUCCESS: "Zvezdochki published!"
+          URL_WORKFLOW: "https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks"
+          FOOTER_MSG_SUCCESS: "${{ github.actor }}'s version was published - <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
+  notify-failure:
+    name: Notify-Failure
+    needs: [publish]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify
+        uses: pcvg/slack-notification-action@master
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          JOB_STATUS: Failure
+          TITLE_MSG_FAIL: "Publish: Workflow failed - Zvezdochki!"
+          URL_WORKFLOW: "https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks"
+          FOOTER_MSG_FAIL: "Failed - ${{ github.actor }}'s workflow in <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"

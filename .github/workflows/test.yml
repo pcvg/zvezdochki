@@ -1,26 +1,38 @@
 name: Test
-on: push
+on:
+  push:
+    branches:
+       - '*'
 jobs:
   test:
-    name: Test
+    name: Run tests
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     steps:
       - uses: actions/checkout@master
       - name: Install dependencies
-        run: npm i
+        run: yarn
       - name: Run test
-        run: npm test
+        run: yarn test
+  linters:
+    name: Run linters
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Install dependencies
+        run: yarn
+      - name: Run linters
+        run: yarn lint
+  notify-failure:
+    runs-on: ubuntu-latest
+    needs: [test,linters]
+    if: failure()
+    name: Notify-Failure
+    steps:
       - name: Notify
-        if: always()
         uses: pcvg/slack-notification-action@master
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-          JOB_STATUS: ${{ job.status }}
-          TITLE_MSG_SUCCESS: "Test completed!"
-          TITLE_MSG_FAIL: "Workflow failed!"
-          TITLE_MSG_CANCELLED: "Workflow canceled!"
+          JOB_STATUS: Failure
+          TITLE_MSG_FAIL: "Workflow failed - Zvezdochki!"
           URL_WORKFLOW: "https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks"
-          FOOTER_MSG_SUCCESS: "${{ github.actor }}'s test was completed in <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
           FOOTER_MSG_FAIL: "Failed - ${{ github.actor }}'s workflow in <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
-          FOOTER_MSG_CANCELLED: "${{ github.actor }}'s workflow cancelled in <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
