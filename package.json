@@ -18,8 +18,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn build",
-      "post-commit": "yarn deploy"
+      "pre-commit": "yarn lint && yarn build"
     }
   },
   "devDependencies": {

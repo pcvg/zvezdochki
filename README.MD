@@ -56,4 +56,4 @@ More Examples and Documentation you can find on the [DEMO Page](https://pcvg.git
 
 ## License
 
-This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE.md) file for details
+This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details
