@@ -13,6 +13,13 @@ jobs:
         run: yarn
       - name: Run test
         run: yarn test
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        env:
+          COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
+          COVERALLS_GIT_BRANCH: "${{ github.ref }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
   linters:
     name: Run linters
     runs-on: ubuntu-latest

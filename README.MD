@@ -1,7 +1,7 @@
-# Zvezdochki :star: :star: :star: :star: :star:
+# Zvezdochki :star: :star: :star: :star: :star: [![Coverage Status](https://coveralls.io/repos/github/pcvg/zvezdochki/badge.svg?branch=master)](https://coveralls.io/github/pcvg/zvezdochki?branch=master)
  (from Russian - _tiny stars_.)
 
-The component for easy creation of star rating components 
+The component for easy creation of star rating components
 
 [DEMO PAGE IS THERE](https://pcvg.github.io/zvezdochki/)
 
