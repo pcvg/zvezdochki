@@ -1,6 +1,6 @@
 import "./index.scss";
 
-export default class Zvezdochki {
+export class Zvezdochki {
   constructor(el, options) {
     this.ratingEl = el;
 
@@ -17,17 +17,14 @@ export default class Zvezdochki {
       this.options = Object.assign(this.options, options)
     }
 
+    this.stars = this.ratingEl.querySelectorAll("[data-" + this.options.starDataAttr + "]");
+
     this.init();
 
   }
 
-  submit(star) {
-    let voteEvent = new CustomEvent('vote', {detail: star});
-    this.ratingEl.dispatchEvent(voteEvent);
-  }
-
   init() {
-    this.setRating();
+    this.setInitialRating();
 
     if (!this.options.voted) {
       this.handleHover();
@@ -37,27 +34,39 @@ export default class Zvezdochki {
     }
   }
 
+  submit(star) {
+    let voteEvent = new CustomEvent('vote', {detail: star});
+    this.ratingEl.dispatchEvent(voteEvent);
+  }
+
   blockVotes() {
     this.ratingEl.classList.add(this.options.votedClassName);
     this.options.voted = true;
+    this.ratingEl.style.pointerEvents = false;
   }
 
-  setRating() {
+  setInitialRating() {
     let initialRating = this.ratingEl.dataset[this.options.ratingDataAttr.toLowerCase()];
-    let activeEl = this.ratingEl.querySelector('*[data-' + this.options.starDataAttr + '="' + initialRating + '"]')
+    this.setActiveStar(initialRating);
+  }
+
+  setActiveStar(rating) {
+    let activeEl = this.ratingEl.querySelector('*[data-' + this.options.starDataAttr + '="' + rating + '"]');
     activeEl.classList.add(this.options.activeClass);
   }
 
   handleHover() {
-    let stars = this.ratingEl.querySelectorAll("[data-" + this.options.starDataAttr + "]");
-    this.ratingEl.addEventListener("mouseenter", () => {
-      stars.forEach(el => {
-        el.classList.remove(this.options.activeClass)
+    this.stars.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        this.stars.forEach(el => {
+          el.classList.remove(this.options.activeClass)
+        })
+      });
+
+      el.addEventListener("mouseleave", () => {
+        this.setInitialRating()
       })
     });
-    this.ratingEl.addEventListener("mouseleave", () => {
-      this.setRating()
-    })
   }
 
   addClickHandler() {
@@ -66,8 +75,11 @@ export default class Zvezdochki {
       ev.stopPropagation();
 
       if (ev.target.dataset[this.options.starDataAttr] && !this.options.voted) {
+        let rating = ev.target.dataset[this.options.starDataAttr];
         ev.target.classList.add(this.options.activeClass);
-        this.submit(ev.target.dataset[this.options.starDataAttr]);
+        this.ratingEl.dataset[this.options.ratingDataAttr.toLowerCase()] = rating;
+
+        this.submit(rating);
 
         this.blockVotes();
       }

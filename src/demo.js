@@ -1,5 +1,5 @@
 import "./demo.scss";
-import Zvezdochki from "./index";
+import {Zvezdochki} from "./Zvezdochki";
 
 require("microlight");
 

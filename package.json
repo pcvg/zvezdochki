@@ -2,7 +2,7 @@
   "name": "@pcvg/zvezdochki",
   "version": "1.0.0",
   "description": "The component for easy creation of star rating components",
-  "main": "index.js",
+  "main": "dist/Zvezdochki.3283b0c3.js",
   "repository": "https://github.com/pcvg/zvezdochki",
   "author": "Savings United GmbH",
   "license": "GPL-3.0",
@@ -13,7 +13,7 @@
     "eslint": "./node_modules/.bin/eslint src",
     "stylelint": "./node_modules/.bin/stylelint src",
     "lint": "yarn eslint && yarn stylelint",
-    "test": "mocha tests",
+    "test": "mocha -r global-jsdom/lib/register tests ",
     "deploy": "yarn build && gh-pages -d dist"
   },
   "husky": {
@@ -26,7 +26,9 @@
     "del-cli": "^3.0.0",
     "eslint": "^6.8.0",
     "gh-pages": "^2.2.0",
+    "global-jsdom": "^6.0.0",
     "husky": "^4.2.1",
+    "jsdom": "^16.1.0",
     "microlight": "^0.0.7",
     "mocha": "^7.0.1",
     "node-sass": "^4.13.1",

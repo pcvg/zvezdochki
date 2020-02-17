@@ -1,4 +1,6 @@
 .star-rating {
+  display: inline-block;
+
   &__list {
     display: inline-flex;
     flex-flow: row-reverse;
@@ -24,5 +26,9 @@
         }
       }
     }
+  }
+
+  &--blocked {
+    pointer-events: none;
   }
 }
