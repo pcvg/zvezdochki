@@ -13,7 +13,7 @@
     "eslint": "./node_modules/.bin/eslint src",
     "stylelint": "./node_modules/.bin/stylelint src",
     "lint": "yarn eslint && yarn stylelint",
-    "test": "mocha -r global-jsdom/lib/register tests ",
+    "test": "nyc mocha -r global-jsdom/lib/register tests && nyc report --reporter=text-lcov | coveralls",
     "deploy": "yarn build && gh-pages -d dist"
   },
   "husky": {
@@ -41,7 +41,8 @@
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-scss": "^3.14.2",
     "coveralls": "^3.0.9",
-    "mocha-lcov-reporter": "^1.3.0"
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^15.0.0"
   },
   "dependencies": {
     "yarn": "^1.22.0"
