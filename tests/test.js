@@ -4,7 +4,8 @@ let should = chai.should();
 const jsdom = require("jsdom");
 const {JSDOM} = jsdom;
 
-const {Zvezdochki} = require("../dist/Zvezdochki.3283b0c3");
+//const {Zvezdochki} = require("../dist/Zvezdochki.3283b0c3");
+const {Zvezdochki} = require("../src/Zvezdochki");
 
 const STARS = `<div class="star-rating star-rating--basic" data-ratingValue="4">
           <ul class="star-rating__list">

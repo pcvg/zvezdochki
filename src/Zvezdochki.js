@@ -1,5 +1,3 @@
-import "./index.scss";
-
 export class Zvezdochki {
   constructor(el, options) {
     this.ratingEl = el;
@@ -20,7 +18,6 @@ export class Zvezdochki {
     this.stars = this.ratingEl.querySelectorAll("[data-" + this.options.starDataAttr + "]");
 
     this.init();
-
   }
 
   init() {
@@ -59,12 +56,12 @@ export class Zvezdochki {
     this.stars.forEach(el => {
       el.addEventListener('mouseenter', () => {
         this.stars.forEach(el => {
-          el.classList.remove(this.options.activeClass)
+          el.classList.remove(this.options.activeClass);
         })
       });
 
       el.addEventListener("mouseleave", () => {
-        this.setInitialRating()
+        this.setInitialRating();
       })
     });
   }
