@@ -1,0 +1,16 @@
+version: 1.0.{build}
+pull_requests:
+do_not_increment_build_number: true
+platform: Any CPU
+environment:
+  COVERALLS_SERVICE_NAME: ZVEZDOCHKI
+  COVERALLS_REPO_TOKEN:
+  secure: 5xKoXkcsxbvtG2ftzbu5macMmdY6PLZjNwF0aPz0ViuI0U4DZYxkw60SojXv/orw
+build_script: yarn build
+build:
+parallel: false
+verbosity: minimal
+test_script:
+ - yarn test
+after_test:
+ - node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info
