@@ -8,4 +8,3 @@ var e;!function(t,n){"function"==typeof e&&e.amd?e(["exports"],n):n("undefined"!
 },{}],"lgAh":[function(require,module,exports) {
 "use strict";require("./demo.scss");var e=require("./Zvezdochki");require("microlight"),function(){var r=document.querySelector(".output1"),t=document.querySelector(".star-rating");new e.Zvezdochki(t),t.addEventListener("vote",function(e){r.innerText="Clicked = "+e.detail})}();
 },{"./demo.scss":"LLHV","./Zvezdochki":"VgtN","microlight":"ELfv"}]},{},["lgAh"], null)
-//# sourceMappingURL=/zvezdochki/demo.d3b53871.js.map

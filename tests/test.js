@@ -6,8 +6,18 @@ const {JSDOM} = jsdom;
 
 const {Zvezdochki} = require("../dist/Zvezdochki.3283b0c3");
 
-const STARS = `<div class="star-rating star-rating--basic" data-ratingValue="4">
-          <ul class="star-rating__list">
+let testOptions = {
+  elementClass: "star-rating",
+  activeClass: "active",
+  votes: "votes",
+  starDataAttr: "star",
+  ratingDataAttr: "ratingValue",
+  votedClassName: 'star-rating--blocked',
+  voted: true
+};
+
+const STARS = `<div class="${testOptions.elementClass} ${testOptions.elementClass}--basic" data-ratingValue="4">
+          <ul class="${testOptions.elementClass}__list">
             <li data-star="5"></li>
             <li data-star="4"></li>
             <li data-star="3"></li>
@@ -25,70 +35,69 @@ const HTML = `<!DOCTYPE html>
      ${DIST}
      </head>
      <body>
-      ${STARS} 
+      ${STARS}
     </body>
    </html>`;
 
 let starRating;
 
-describe("initialize", function () {
-  before(function () {
+describe("initialize", function() {
+  before(function() {
     let DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
 
     let window = DOM.window;
     let document = window.document;
 
-    starRating = new Zvezdochki(document.querySelector('.star-rating'));
+    starRating = new Zvezdochki(document.querySelector(`.${testOptions.elementClass}`), testOptions);
   });
 
-  it("should initialize", function () {
+  it("should initialize", function() {
     starRating.should.be.an('object');
   })
 });
 
 
-describe('functionality', function () {
+describe('functionality', function() {
   let DOM, starsEl;
 
-  context('initializing', function () {
-    before(function () {
+  context('initializing', function() {
+    before(function() {
       DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
       global.window = DOM.window;
       global.document = window.document;
 
-      let options = {voted: true};
+      let options = {voted: testOptions.voted};
 
-      starsEl = document.querySelector('.star-rating');
+      starsEl = document.querySelector(`.${testOptions.elementClass}`);
       new Zvezdochki(starsEl, options);
     });
 
-    it('should highlight the initial rating', function () {
-      let activeStar = document.querySelector(".star-rating .active");
+    it('should highlight the initial rating', function() {
+      let activeStar = document.querySelector(`.${testOptions.elementClass} .${testOptions.activeClass}`);
       activeStar.dataset.star.should.equal('4')
     });
 
-    it('cannot vote if blocked', function () {
-      starsEl.classList.contains('star-rating--blocked').should.be.true;
+    it('cannot vote if blocked', function() {
+      starsEl.classList.contains(testOptions.votedClassName).should.be.true;
     })
   });
 
-  context('clicks', function () {
-    before(function () {
+  context('clicks', function() {
+    before(function() {
       DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
       let window = DOM.window;
       let document = window.document;
       global.vote = null;
 
-      starsEl = document.querySelector('.star-rating');
+      starsEl = document.querySelector(`.${testOptions.elementClass}`);
 
       new Zvezdochki(starsEl);
 
-      let star = document.querySelector('.star-rating__list > li:nth-child(3)');
+      let star = document.querySelector(`.${testOptions.elementClass}__list > li:nth-child(3)`);
 
       starsEl.addEventListener("vote", ev => {
         vote = ev.detail;
       });
-
 
       let clickEvent = document.createEvent("HTMLEvents");
       clickEvent.initEvent("click", true, true);
@@ -96,11 +105,11 @@ describe('functionality', function () {
 
     });
 
-    it('should block votes', function () {
-      starsEl.classList.contains('star-rating--blocked').should.be.true;
+    it('should block votes', function() {
+      starsEl.classList.contains(testOptions.votedClassName).should.be.true;
     });
 
-    it('should dispatch event', function () {
+    it('should dispatch event', function() {
       vote.should.be.equal('3')
     });
   })
