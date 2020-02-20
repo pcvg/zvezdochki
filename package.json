@@ -13,8 +13,8 @@
     "eslint": "./node_modules/.bin/eslint src",
     "stylelint": "./node_modules/.bin/stylelint src",
     "lint": "yarn eslint && yarn stylelint",
-    "test": "nyc mocha -r global-jsdom/lib/register tests",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test": "nyc mocha -r global-jsdom/lib/register tests && yarn report-coverage",
+    "report-coverage": "nyc report --reporter=text-lcov > ./coverage/lcov.info",
     "deploy": "yarn build && gh-pages -d dist"
   },
   "husky": {
