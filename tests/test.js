@@ -53,9 +53,16 @@ describe("initialize", function() {
 
   it("should initialize", function() {
     starRating.should.be.an('object');
-  })
-});
+  });
 
+  it("styles file exists", function() {
+    try {
+      let styles = require('../dist/Zvezdochki.3283b0c3');
+    } catch (e) {
+      return false;
+    }
+  });
+});
 
 describe('functionality', function() {
   let DOM, starsEl;
