@@ -46,6 +46,8 @@
     "stylelint-scss": "^3.14.2"
   },
   "dependencies": {
+    "istanbul": "^0.4.5",
+    "jscover": "^1.0.0",
     "yarn": "^1.22.0"
   }
 }
