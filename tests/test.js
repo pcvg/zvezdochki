@@ -96,6 +96,7 @@ describe('functionality', function() {
       let star = document.querySelector(`.${testOptions.elementClass}__list > li:nth-child(3)`);
 
       starsEl.addEventListener("vote", ev => {
+        console.log('ev: ', ev);
         vote = ev.detail;
       });
 
@@ -113,37 +114,4 @@ describe('functionality', function() {
       vote.should.be.equal('3')
     });
   });
-
-  context('clicks', function() {
-    before(function() {
-      DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
-      let window = DOM.window;
-      let document = window.document;
-      global.vote2 = null;
-
-      starsEl = document.querySelector(`.${testOptions.elementClass}`);
-
-      new Zvezdochki(starsEl);
-
-      let star = document.querySelector(`.${testOptions.elementClass}__list > li:nth-child(2)`);
-
-      starsEl.addEventListener("vote", ev => {
-        vote2 = ev.detail;
-      });
-
-      let clickEvent = document.createEvent("HTMLEvents");
-      clickEvent.initEvent("click", true, true);
-      star.dispatchEvent(clickEvent)
-
-    });
-
-    it('should block votes', function() {
-      starsEl.classList.contains(testOptions.votedClassName).should.be.true;
-    });
-
-    it('should dispatch event', function() {
-      vote2.should.be.equal('4')
-    });
-  });
-
 });
