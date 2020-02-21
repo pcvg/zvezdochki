@@ -96,7 +96,6 @@ describe('functionality', function() {
       let star = document.querySelector(`.${testOptions.elementClass}__list > li:nth-child(3)`);
 
       starsEl.addEventListener("vote", ev => {
-        console.log('ev: ', ev);
         vote = ev.detail;
       });
 
