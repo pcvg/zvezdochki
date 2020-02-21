@@ -7,7 +7,7 @@ const {JSDOM} = jsdom;
 const {Zvezdochki} = require("../dist/Zvezdochki.3283b0c3");
 
 let testOptions = {
-  elementClass: "star-rating",
+  elementClass: "star-rating1",
   activeClass: "active",
   votes: "votes",
   starDataAttr: "star",
@@ -53,16 +53,9 @@ describe("initialize", function() {
 
   it("should initialize", function() {
     starRating.should.be.an('object');
-  });
-
-  it("styles file exists", function() {
-    try {
-      let styles = require('../dist/Zvezdochki.3283b0c3');
-    } catch (e) {
-      return false;
-    }
-  });
+  })
 });
+
 
 describe('functionality', function() {
   let DOM, starsEl;
@@ -119,5 +112,38 @@ describe('functionality', function() {
     it('should dispatch event', function() {
       vote.should.be.equal('3')
     });
-  })
+  });
+
+  context('clicks', function() {
+    before(function() {
+      DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
+      let window = DOM.window;
+      let document = window.document;
+      global.vote2 = null;
+
+      starsEl = document.querySelector(`.${testOptions.elementClass}`);
+
+      new Zvezdochki(starsEl);
+
+      let star = document.querySelector(`.${testOptions.elementClass}__list > li:nth-child(2)`);
+
+      starsEl.addEventListener("vote", ev => {
+        vote2 = ev.detail;
+      });
+
+      let clickEvent = document.createEvent("HTMLEvents");
+      clickEvent.initEvent("click", true, true);
+      star.dispatchEvent(clickEvent)
+
+    });
+
+    it('should block votes', function() {
+      starsEl.classList.contains(testOptions.votedClassName).should.be.true;
+    });
+
+    it('should dispatch event', function() {
+      vote2.should.be.equal('4')
+    });
+  });
+
 });
