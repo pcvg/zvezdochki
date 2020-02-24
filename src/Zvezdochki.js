@@ -1,14 +1,16 @@
+import Fingerprint2 from "fingerprintjs2";
+
 export class Zvezdochki {
   constructor(el, options) {
     this.ratingEl = el;
 
     this.options = {
       activeClass: "active",
-      votes: "votes",
       starDataAttr: "star",
       ratingDataAttr: "ratingValue",
       votedClassName: 'star-rating--blocked',
-      voted: false
+      voted: false,
+      fingerPrint: false
     };
 
     if (el && options) {
@@ -23,6 +25,10 @@ export class Zvezdochki {
   init() {
     this.setInitialRating();
 
+    if (this.options.fingerPrint) {
+      this.getFingerPrint();
+    }
+
     if (!this.options.voted) {
       this.handleHover();
       this.addClickHandler();
@@ -32,14 +38,53 @@ export class Zvezdochki {
   }
 
   submit(star) {
-    let voteEvent = new CustomEvent('vote', {detail: star});
+    let eventData = {
+      star: star
+    };
+
+    if (this.options.fingerPrint) {
+      eventData.fingerPrint = this.options.fingerPrint
+    }
+
+    let voteEvent = new CustomEvent('vote', {detail: eventData});
     this.ratingEl.dispatchEvent(voteEvent);
+  }
+
+  getFingerPrint() {
+    if (window.requestIdleCallback) {
+      requestIdleCallback(() => {
+        Fingerprint2.get(components => {
+          var values = components.map(function(component) {
+            return component.value
+          });
+          this.options.fingerPrint = Fingerprint2.x64hash128(values.join(''), 31)
+        });
+      })
+    } else {
+      setTimeout(() => {
+        Fingerprint2.get(components => {
+          var values = components.map(function(component) {
+            return component.value
+          });
+          this.options.fingerPrint = Fingerprint2.x64hash128(values.join(''), 31)
+        })
+      }, 500)
+    }
   }
 
   blockVotes() {
     this.ratingEl.classList.add(this.options.votedClassName);
     this.options.voted = true;
     this.ratingEl.style.pointerEvents = false;
+  }
+
+  unblockVotes() {
+    this.handleHover();
+    this.addClickHandler();
+
+    this.ratingEl.classList.remove(this.options.votedClassName);
+    this.options.voted = false;
+    this.ratingEl.style.pointerEvents = '';
   }
 
   setInitialRating() {

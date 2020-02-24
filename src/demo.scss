@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
+  src: url("NotoEmoji-Regular.ttf");
+}
+
 html {
   height: 100%;
 }
@@ -12,13 +17,41 @@ body {
   background-color: #FFF;
 }
 
+.page-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  flex: 0 1 100%;
+  max-width: 100%;
   padding: 14px;
   background-color: #24292E;
 
   &__title {
     color: #FFF;
     font-size: 16px;
+  }
+}
+
+main {
+  flex: 0 0 80%;
+  max-width: 80%;
+  padding-top: 20px;
+}
+
+.sidebar {
+  flex: 0 0 20%;
+  box-sizing: border-box;
+  padding: 20px 0 0;
+  border-right: 1px solid #DDD;
+
+  nav {
+    position: fixed;
+    top: 60px;
   }
 }
 
@@ -45,22 +78,6 @@ body {
   max-width: 50%;
 }
 
-main {
-  float: left;
-  width: 80%;
-  max-width: 80%;
-  padding-top: 20px;
-}
-
-.sidebar {
-  float: left;
-  width: 19%;
-  max-width: 19%;
-  height: 100%;
-  padding-top: 20px;
-  border-right: 1px solid #DDD;
-}
-
 .microlight {
   color: #AABBC3;
 }
@@ -69,4 +86,48 @@ pre {
   background-color: #263238;
   border-radius: 0.2em;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
+}
+
+.emoji-rating {
+  &--blocked {
+    pointer-events: none;
+  }
+
+  &__list {
+    display: inline-flex;
+    flex-flow: row-reverse;
+    padding: 10px;
+    list-style-type: none;
+    background-color: #F0F0F0;
+    border-radius: 20px;
+
+    span {
+      padding: 0 5px;
+      font-size: 24px;
+      font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
+      filter: grayscale(100%) blur(1px);
+
+      &.active,
+      &.active ~ span,
+      &:hover,
+      &:hover ~ span {
+        filter: none;
+      }
+    }
+  }
+}
+
+.btn {
+  &--unblock {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 4px 10px;
+    color: #000;
+    font-weight: 500;
+    font-size: 14px;
+    background-color: #73E4AD;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
 }

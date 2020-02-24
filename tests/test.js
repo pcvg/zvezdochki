@@ -87,7 +87,7 @@ describe('functionality', function () {
       let star = document.querySelector('.star-rating__list > li:nth-child(3)');
 
       starsEl.addEventListener("vote", ev => {
-        vote = ev.detail;
+        vote = ev.detail.star;
       });
 
 
