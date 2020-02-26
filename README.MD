@@ -18,7 +18,7 @@ A step by step instruction
 `yarn add @savingsunited/zvezdochki`
 
 Or
-`npm add @savingsunited/zvezdochki
+`npm i @savingsunited/zvezdochki
 `
 
 ```html
