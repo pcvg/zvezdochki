@@ -1,6 +1,6 @@
 TN:
 SF:src/Zvezdochki.js
-FN:4,Zvezdochki
+FN:4,_default
 FN:25,init
 FN:40,submit
 FN:53,getFingerPrint
@@ -23,7 +23,7 @@ FN:114,addClickHandler
 FN:115,(anonymous_25)
 FNF:21
 FNH:10
-FNDA:3,Zvezdochki
+FNDA:3,_default
 FNDA:3,init
 FNDA:1,submit
 FNDA:0,getFingerPrint

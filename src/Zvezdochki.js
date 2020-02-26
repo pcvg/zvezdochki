@@ -1,6 +1,6 @@
 import Fingerprint2 from "fingerprintjs2";
 
-export class Zvezdochki {
+export default class {
   constructor(el, options) {
     this.ratingEl = el;
 

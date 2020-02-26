@@ -4,8 +4,8 @@ let should = chai.should();
 const jsdom = require("jsdom");
 const {JSDOM} = jsdom;
 
-//const {Zvezdochki} = require("../dist/Zvezdochki.3283b0c3");
-const {Zvezdochki} = require("../src/Zvezdochki");
+
+import Zvezdochki from "../src/Zvezdochki";
 
 let testOptions = {
   elementClass: "star-rating1",
