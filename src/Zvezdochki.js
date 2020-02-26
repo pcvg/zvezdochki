@@ -114,18 +114,23 @@ export default class {
   addClickHandler() {
     this.ratingEl.addEventListener('click', ev => {
       ev.preventDefault();
-      ev.stopPropagation();
 
-      if (ev.target.dataset[this.options.starDataAttr] && !this.options.voted) {
-        let rating = ev.target.dataset[this.options.starDataAttr];
-        ev.target.classList.add(this.options.activeClass);
+      let target = ev.target;
+
+      if (!target.dataset[this.options.starDataAttr]) {
+        target = target.closest(`[data-${this.options.starDataAttr}]`);
+      }
+
+      if (target.dataset[this.options.starDataAttr] && !this.options.voted) {
+        let rating = target.dataset[this.options.starDataAttr];
+        target.classList.add(this.options.activeClass);
         this.ratingEl.dataset[this.options.ratingDataAttr.toLowerCase()] = rating;
 
         this.submit(rating);
 
         this.blockVotes();
       }
-    });
+    }, true);
   }
 }
 
