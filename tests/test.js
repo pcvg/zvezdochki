@@ -4,7 +4,6 @@ let should = chai.should();
 const jsdom = require("jsdom");
 const {JSDOM} = jsdom;
 
-//const {Zvezdochki} = require("../dist/Zvezdochki.3283b0c3");
 const {Zvezdochki} = require("../src/Zvezdochki");
 
 let testOptions = {
@@ -62,6 +61,7 @@ describe('functionality', function() {
   let DOM, starsEl;
 
   context('initializing', function() {
+    
     before(function() {
       DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
       global.window = DOM.window;
@@ -113,5 +113,26 @@ describe('functionality', function() {
     it('should dispatch event', function() {
       vote.should.be.equal('3')
     });
+  });
+
+  context('functions', function() {
+    before(function() {
+      DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
+      let window = DOM.window;
+      let document = window.document;
+      global.vote = null;
+
+      starsEl = document.querySelector(`.${testOptions.elementClass}`);
+
+      let zvezdochki = new Zvezdochki(starsEl);
+
+      zvezdochki.unblockVotes();
+
+    });
+
+    it('should block votes', function() {
+      starsEl.classList.contains(testOptions.votedClassName).should.be.false;
+    });
+
   });
 });
