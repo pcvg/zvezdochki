@@ -16,7 +16,6 @@ let testOptions = {
   fingerPrint: true
 };
 
-
 const STARS = `<div class="${testOptions.elementClass}" data-rating="hankey">
                 <div class="${testOptions.elementClass}__list">
                   <span data-emoji="love">😍</span>
@@ -55,22 +54,4 @@ describe("initialize", function() {
   it("should initialize", function() {
     starRating.should.be.an('object');
   })
-});
-
-
-describe('functionality', function() {
-  let DOM, starsEl;
-
-  context('initializing', function() {
-    before(function() {
-      DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
-      global.window = DOM.window;
-      global.document = window.document;
-
-      let options = {voted: testOptions.voted};
-
-      starsEl = document.querySelector(`.${testOptions.elementClass}`);
-      new Zvezdochki(starsEl, options);
-    });
-  });
 });

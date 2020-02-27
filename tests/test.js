@@ -58,7 +58,7 @@ describe("initialize", function() {
 
 
 describe('functionality', function() {
-  let DOM, starsEl;
+  let DOM, starsEl, star;
 
   context('initializing', function() {
     
@@ -94,7 +94,7 @@ describe('functionality', function() {
 
       new Zvezdochki(starsEl);
 
-      let star = document.querySelector(`.${testOptions.elementClass}__list > li:nth-child(3)`);
+      star = document.querySelector(`.${testOptions.elementClass}__list > li:nth-child(3)`);
 
       starsEl.addEventListener("vote", ev => {
         vote = ev.detail.star;
@@ -102,7 +102,11 @@ describe('functionality', function() {
 
       let clickEvent = document.createEvent("HTMLEvents");
       clickEvent.initEvent("click", true, true);
-      star.dispatchEvent(clickEvent)
+      star.dispatchEvent(clickEvent);
+
+      let mouseenterEvent = document.createEvent("HTMLEvents");
+      mouseenterEvent.initEvent("mouseenter", true, true);
+      star.dispatchEvent(mouseenterEvent);
 
     });
 
@@ -111,27 +115,40 @@ describe('functionality', function() {
     });
 
     it('should dispatch event', function() {
-      vote.should.be.equal('3')
+      vote.should.be.equal('3');
+    });
+
+    it('should delete active class', function() {
+      star.classList.contains(testOptions.activeClass).should.be.false;
     });
   });
 
-  context('functions', function() {
+  context('functions and events', function() {
     before(function() {
       DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
       let window = DOM.window;
       let document = window.document;
-      global.vote = null;
 
       starsEl = document.querySelector(`.${testOptions.elementClass}`);
+
+      star = document.querySelector(`.${testOptions.elementClass}__list > li:nth-child(2)`);
 
       let zvezdochki = new Zvezdochki(starsEl);
 
       zvezdochki.unblockVotes();
 
+      let mouseleaveEvent = document.createEvent("HTMLEvents");
+      mouseleaveEvent.initEvent("mouseleave", true, true);
+      star.dispatchEvent(mouseleaveEvent);
+
     });
 
-    it('should block votes', function() {
+    it('should unblock votes', function() {
       starsEl.classList.contains(testOptions.votedClassName).should.be.false;
+    });
+
+    it('should return active class', function() {
+      star.classList.contains(testOptions.activeClass).should.be.true;
     });
 
   });
