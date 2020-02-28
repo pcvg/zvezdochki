@@ -123,7 +123,7 @@ describe('functionality', function() {
     });
   });
 
-  context('functions and events', function() {
+  context('mouse leave', function() {
     before(function() {
       DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
       let window = DOM.window;
@@ -152,4 +152,5 @@ describe('functionality', function() {
     });
 
   });
+
 });

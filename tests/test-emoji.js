@@ -53,5 +53,6 @@ describe("initialize", function() {
 
   it("should initialize", function() {
     starRating.should.be.an('object');
-  })
+  });
+
 });
