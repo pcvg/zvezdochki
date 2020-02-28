@@ -15,9 +15,11 @@ A step by step instruction
 
 ### Usage
 
-```
-yarn add zvezdochki
-```
+`yarn add @savingsunited/zvezdochki`
+
+Or
+`npm i @savingsunited/zvezdochki
+`
 
 ```html
 <div class="star-rating star-rating--basic" data-ratingValue="4">
@@ -32,14 +34,15 @@ yarn add zvezdochki
 ```
 
 ```javascript
-import Zvezdochki from "zvezdochki";
+import Zvezdochki from "@savingsunited/zvezdochki";
+require("@savingsunited/zvezdochki/dist/Zvezdochki.5e2a2fb4.css"); //If you need css
 
 let ratingEl = document.querySelector(".star-rating");
 
 new Zvezdochki(ratingEl);
 
 ratingEl.addEventListener("vote", ev => {
-  console.log(ev.detail) //star number
+  console.log(ev.detail.star) //star number
 });
 ```
 
