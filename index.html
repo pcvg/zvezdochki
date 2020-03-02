@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><title>SU Star Rating Component Demo</title><link rel="stylesheet" href="/zvezdochki/Zvezdochki.5e2a2fb4.css"><link rel="stylesheet" href="/zvezdochki/demo.d3b53871.css"></head><body>
-<div class="page-container"> <div class="header"> <span class="header__title">Zvezdochki</span> </div> <aside class="sidebar"> <div class="row"> <nav class="sidebar__nav"> <ul class="nav"> <li class="nav__el"> <a href="#intro">Introduction</a> </li> <li class="nav__el"> <a href="#basic">Basic usage</a> </li> <li class="nav__el"> <a href="#advanced">Advanced usage</a> </li> <li class="nav__el"> <a href="">Styling</a> </li> </ul> </nav> </div> </aside> <main> <div class="container"> <div class="row"> <h1 id="intro">Introduction</h1> <p> Zvezdochki can be used for creating various types of rating components on your pages. It's lightweight, fast and modular component with schema.org compatibility. </p> </div>  <div class="row"> <div class="col-50"> <h2 id="basic"> Basic usage </h2> <div class="star-rating star-rating--basic" data-ratingValue="4"> <ul class="star-rating__list"> <li data-star="5"></li> <li data-star="4"></li> <li data-star="3"></li> <li data-star="2"></li> <li data-star="1"></li> </ul> </div> </div> <div class="col-50"> <h5>Events</h5> <pre>
+<div class="page-container"> <div class="header"> <span class="header__title">Zvezdochki</span> </div> <aside class="sidebar"> <div class="row"> <nav class="sidebar__nav"> <ul class="nav"> <li class="nav__el"> <a href="#intro">Introduction</a> </li> <li class="nav__el"> <a href="#basic">Basic usage</a> </li> <li class="nav__el"> <a href="#advanced">Advanced usage</a> </li> <li class="nav__el"> <a href="#localstorage">Local Storage</a> </li> </ul> </nav> </div> </aside> <main> <div class="container"> <div class="row"> <h1 id="intro">Introduction</h1> <p> Zvezdochki can be used for creating various types of rating components on your pages. It's lightweight, fast and modular component with schema.org compatibility. </p> </div>  <div class="row"> <div class="col-50"> <h2 id="basic"> Basic usage </h2> <div class="star-rating star-rating--basic" data-ratingValue="4"> <ul class="star-rating__list"> <li data-star="5"></li> <li data-star="4"></li> <li data-star="3"></li> <li data-star="2"></li> <li data-star="1"></li> </ul> </div> </div> <div class="col-50"> <h5>Events</h5> <pre>
   <code class="microlight output1">
   </code>
         </pre> </div> <div class="col-100"> <h5>HTML</h5> <pre>
@@ -54,6 +54,38 @@
     votedClassName: 'emoji-rating--blocked',
     voted: false,
     fingerPrint: true
+  };
+
+  new Zvezdochki(ratingEl, options);
+
+  ratingEl.addEventListener("vote", ev => {
+    console.log(ev.detail);
+  });
+  </code>
+    </pre> </div> </div>   <div class="row"> <div class="col-50"> <h2 id="localstorage"> Save already voted ratings ID in localstorage (for better compatibility with caching services) </h2> <div class="star-rating star-rating--storage" data-ratingValue="3" data-id="321"> <ul class="star-rating__list"> <li data-star="5"></li> <li data-star="4"></li> <li data-star="3"></li> <li data-star="2"></li> <li data-star="1"></li> </ul> </div> <div> <button class="btn btn--clear-storage">Clear Local Storage and reload the page</button> </div> </div> <div class="col-50"> <h5>Events</h5> <pre>
+  <code class="microlight output3">
+  </code>
+        </pre> </div> <div class="col-100"> <h5>HTML</h5> <pre>
+ <code class="microlight">
+  &lt;div class=&quot;star-rating star-rating--storage&quot; data-id="321" data-ratingValue=&quot;3&quot;&gt;
+    &lt;ul class=&quot;star-rating__list&quot;&gt;
+      &lt;li data-star=&quot;5&quot;&gt;&lt;/li&gt;
+      &lt;li data-star=&quot;4&quot;&gt;&lt;/li&gt;
+      &lt;li data-star=&quot;3&quot;&gt;&lt;/li&gt;
+      &lt;li data-star=&quot;2&quot;&gt;&lt;/li&gt;
+      &lt;li data-star=&quot;1&quot;&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  </code>
+      </pre> </div> <div class="col-100"> <h5>JS</h5> <pre>
+  <code class="microlight">
+  import Zvezdochki from "zvezdochki";
+
+  let ratingEl = document.querySelector('.star-rating--storage');
+
+  let options = {
+    id: ratingEl.dataset.id,
+    localStorageName: 'votes'
   };
 
   new Zvezdochki(ratingEl, options);
