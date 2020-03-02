@@ -41,3 +41,27 @@ require("microlight");
     emojisRating.unblockVotes();
   });
 })();
+
+(function LocalStorage() {
+  let output = document.querySelector('.output3');
+
+  let ratingEl = document.querySelector('.star-rating--storage');
+
+  let clearStorageBtn = document.querySelector('.btn--clear-storage');
+
+  let options = {
+    id: ratingEl.dataset.id,
+    localStorageName: 'votes'
+  };
+
+  new Zvezdochki(ratingEl, options);
+
+  ratingEl.addEventListener('click', ev => {
+    output.innerText = "Clicked = " + ev.detail.star + ". \n  LocalStorage content is = " + window.localStorage.getItem('votes');
+  });
+
+  clearStorageBtn.addEventListener('click', ()=>{
+    window.localStorage.clear();
+    window.location.reload();
+  })
+})();
