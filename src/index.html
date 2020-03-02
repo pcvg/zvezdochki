@@ -27,7 +27,7 @@
             <a href="#advanced">Advanced usage</a>
           </li>
           <li class="nav__el">
-            <a href="">Styling</a>
+            <a href="#localstorage">Local Storage</a>
           </li>
         </ul>
       </nav>
@@ -162,6 +162,74 @@
     votedClassName: 'emoji-rating--blocked',
     voted: false,
     fingerPrint: true
+  };
+
+  new Zvezdochki(ratingEl, options);
+
+  ratingEl.addEventListener("vote", ev => {
+    console.log(ev.detail);
+  });
+  </code>
+    </pre>
+        </div>
+      </div>
+      <!-- advanced Usage End -->
+
+      <!-- advanced Usage Start-->
+      <div class="row">
+        <div class="col-50">
+          <h2 id="localstorage">
+            Save already voted ratings ID in localstorage (for better compatibility with caching services)
+          </h2>
+          <div class="star-rating star-rating--storage" data-ratingValue="3" data-id="321">
+          <ul class="star-rating__list">
+            <li data-star="5"></li>
+            <li data-star="4"></li>
+            <li data-star="3"></li>
+            <li data-star="2"></li>
+            <li data-star="1"></li>
+          </ul>
+        </div>
+          <div>
+            <button class="btn btn--clear-storage">Clear Local Storage and reload the page</button>
+          </div>
+        </div>
+        <div class="col-50">
+          <h5>Events</h5>
+          <pre class="">
+  <code class="microlight output3">
+  </code>
+        </pre>
+        </div>
+
+        <div class="col-100">
+          <h5>HTML</h5>
+          <pre>
+ <code class="microlight">
+  &lt;div class=&quot;star-rating star-rating--storage&quot; data-id="321" data-ratingValue=&quot;3&quot;&gt;
+    &lt;ul class=&quot;star-rating__list&quot;&gt;
+      &lt;li data-star=&quot;5&quot;&gt;&lt;/li&gt;
+      &lt;li data-star=&quot;4&quot;&gt;&lt;/li&gt;
+      &lt;li data-star=&quot;3&quot;&gt;&lt;/li&gt;
+      &lt;li data-star=&quot;2&quot;&gt;&lt;/li&gt;
+      &lt;li data-star=&quot;1&quot;&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  </code>
+      </pre>
+        </div>
+
+        <div class="col-100">
+          <h5>JS</h5>
+          <pre>
+  <code class="microlight">
+  import Zvezdochki from "zvezdochki";
+
+  let ratingEl = document.querySelector('.star-rating--storage');
+
+  let options = {
+    id: ratingEl.dataset.id,
+    localStorageName: 'votes'
   };
 
   new Zvezdochki(ratingEl, options);

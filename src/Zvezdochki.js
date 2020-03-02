@@ -9,12 +9,19 @@ export default class {
       starDataAttr: "star",
       ratingDataAttr: "ratingValue",
       votedClassName: 'star-rating--blocked',
+      id: null,
       voted: false,
-      fingerPrint: false
+      fingerPrint: false,
+      localStorageName: null
     };
 
     if (el && options) {
       this.options = Object.assign(this.options, options)
+    }
+
+    if (this.options.localStorageName) {
+      this.storage = window.localStorage.getItem(this.options.localStorageName);
+      this.votedIds = JSON.parse(this.storage) || [];
     }
 
     this.stars = this.ratingEl.querySelectorAll("[data-" + this.options.starDataAttr + "]");
@@ -29,7 +36,7 @@ export default class {
       this.getFingerPrint();
     }
 
-    if (!this.options.voted) {
+    if (!this.isVoted()) {
       this.handleHover();
       this.addClickHandler();
     } else {
@@ -44,6 +51,10 @@ export default class {
 
     if (this.options.fingerPrint) {
       eventData.fingerPrint = this.options.fingerPrint
+    }
+
+    if (this.options.localStorageName) {
+      this.addVoteToStorage();
     }
 
     let voteEvent = new CustomEvent('vote', {detail: eventData});
@@ -85,6 +96,23 @@ export default class {
     this.ratingEl.classList.remove(this.options.votedClassName);
     this.options.voted = false;
     this.ratingEl.style.pointerEvents = '';
+  }
+
+  isVoted() {
+    if (this.options.voted) {
+      return true;
+    }
+
+    if (this.options.localStorageName && this.votedIds) {
+      let id = this.options.id || 1;
+      return this.votedIds.includes(id);
+    }
+  }
+
+  addVoteToStorage() {
+    let id = this.options.id || 1;
+    this.votedIds = [...this.votedIds, id];
+    window.localStorage.setItem(this.options.localStorageName, JSON.stringify(this.votedIds));
   }
 
   setInitialRating() {
