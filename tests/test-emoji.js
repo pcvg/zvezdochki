@@ -41,7 +41,7 @@ const HTML = `<!DOCTYPE html>
 
 let starRating;
 
-describe("initialize", function() {
+describe("initialize with emoji", function() {
   before(function() {
     let DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
 

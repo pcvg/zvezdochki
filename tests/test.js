@@ -61,7 +61,7 @@ describe('functionality', function() {
   let DOM, starsEl, star;
 
   context('initializing', function() {
-    
+
     before(function() {
       DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
       global.window = DOM.window;
