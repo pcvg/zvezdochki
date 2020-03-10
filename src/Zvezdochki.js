@@ -121,8 +121,10 @@ export default class {
   }
 
   setActiveStar(rating) {
-    let activeEl = this.ratingEl.querySelector('*[data-' + this.options.starDataAttr + '="' + rating + '"]');
-    activeEl.classList.add(this.options.activeClass);
+    if (rating && rating !== "0") {
+      let activeEl = this.ratingEl.querySelector('*[data-' + this.options.starDataAttr + '="' + rating + '"]');
+      activeEl.classList.add(this.options.activeClass);
+    }
   }
 
   handleHover() {
