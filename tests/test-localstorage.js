@@ -7,10 +7,6 @@ const {JSDOM} = jsdom;
 
 import Zvezdochki from "../src/Zvezdochki";
 
-global.window = {};
-import 'mock-local-storage';
-window.localStorage = global.localStorage;
-
 let testOptions = {
   elementClass: "star-rating1",
   activeClass: "active",

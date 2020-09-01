@@ -1,6 +1,6 @@
 {
   "name": "@savingsunited/zvezdochki",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "The component for easy creation of star rating components",
   "main": "dist/Zvezdochki.3283b0c3.js",
   "repository": "https://github.com/pcvg/zvezdochki",
@@ -13,7 +13,7 @@
     "eslint": "./node_modules/.bin/eslint src",
     "stylelint": "./node_modules/.bin/stylelint src",
     "lint": "yarn eslint && yarn stylelint",
-    "test": "nyc mocha --require @babel/register -r global-jsdom/lib/register tests && yarn report-coverage",
+    "test": "nyc mocha --require @babel/register -r jsdom-global/register -r mock-local-storage tests && yarn report-coverage",
     "report-coverage": "nyc report --reporter=text-lcov > ./coverage/lcov.info",
     "deploy": "yarn build && gh-pages -d dist"
   },
@@ -28,35 +28,35 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.8.7",
-    "@babel/preset-env": "^7.8.7",
-    "@babel/register": "^7.8.6",
+    "@babel/core": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/register": "^7.11.5",
     "canvas": "^2.6.1",
     "chai": "^4.2.0",
-    "coveralls": "^3.0.11",
-    "del-cli": "^3.0.0",
-    "eslint": "^6.8.0",
-    "gh-pages": "^2.2.0",
-    "global-jsdom": "^6.0.0",
-    "husky": "^4.2.3",
-    "jsdom": "^16.2.1",
+    "coveralls": "^3.1.0",
+    "del-cli": "^3.0.1",
+    "eslint": "^7.8.0",
+    "gh-pages": "^3.1.0",
+    "husky": "^4.2.5",
+    "jsdom": "^16.4.0",
+    "jsdom-global": "^3.0.2",
     "microlight": "^0.0.7",
-    "mocha": "^7.1.1",
+    "mocha": "^8.1.3",
     "mocha-lcov-reporter": "^1.3.0",
-    "mock-local-storage": "^1.1.11",
-    "node-sass": "^4.13.1",
-    "nyc": "^15.0.0",
+    "mock-local-storage": "^1.1.15",
+    "node-sass": "^4.14.1",
+    "nyc": "^15.1.0",
     "parcel": "^1.12.4",
-    "postcss": "^7.0.27",
+    "postcss": "^7.0.32",
     "postcss-csso": "^4.0.0",
-    "postcss-flexbugs-fixes": "^4.2.0",
+    "postcss-flexbugs-fixes": "^4.2.1",
     "postcss-preset-env": "^6.7.0",
-    "stylelint": "^13.2.1",
+    "stylelint": "^13.7.0",
     "stylelint-config-rational-order": "^0.1.2",
-    "stylelint-scss": "^3.16.0"
+    "stylelint-scss": "^3.18.0"
   },
   "dependencies": {
-    "fingerprintjs2": "^2.1.0",
-    "yarn": "^1.22.4"
+    "fingerprintjs2": "^2.1.2",
+    "yarn": "^1.22.5"
   }
 }
