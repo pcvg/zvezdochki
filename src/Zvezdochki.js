@@ -148,7 +148,7 @@ export default class {
       let target = ev.target;
 
       if (!target.dataset[this.options.starDataAttr]) {
-        target = target.closest(`[data-${this.options.starDataAttr}]`);
+        return;
       }
 
       if (target.dataset[this.options.starDataAttr] && !this.options.voted) {
@@ -163,4 +163,3 @@ export default class {
     }, true);
   }
 }
-
