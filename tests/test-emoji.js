@@ -18,8 +18,8 @@ let testOptions = {
 
 const STARS = `<div class="${testOptions.elementClass}" data-rating="hankey">
                 <div class="${testOptions.elementClass}__list">
-                  <span data-emoji="love">😍</span>
-                  <span data-emoji="yep">😃</span>
+                  <span data-emoji="love"><span>😍</span></span>
+                  <span data-emoji="yep"><span>😃</span></span>
                   <span data-emoji="maybe">😏</span>
                   <span data-emoji="nope">😐</span>
                   <span data-emoji="hankey">💩</span>
@@ -39,20 +39,44 @@ const HTML = `<!DOCTYPE html>
     </body>
    </html>`;
 
-let starRating;
-
 describe("initialize with emoji", function() {
+  let ratingEl, emojiClicked, starRating;
+
   before(function() {
     let DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});
 
     let window = DOM.window;
     let document = window.document;
+    ratingEl = document.querySelector(`.${testOptions.elementClass}`)
 
-    starRating = new Zvezdochki(document.querySelector(`.${testOptions.elementClass}`), testOptions);
+    starRating = new Zvezdochki(ratingEl, testOptions);
+
+    ratingEl.addEventListener("vote", function(ev) {
+      emojiClicked = ev.detail.star;
+    });
   });
 
   it("should initialize", function() {
     starRating.should.be.an('object');
   });
+
+  it("should click on emojis", function() {
+    let clickEvent = document.createEvent("HTMLEvents");
+    clickEvent.initEvent("click", true, true);
+    ratingEl.querySelector('span:nth-child(3)').dispatchEvent(clickEvent);
+
+    emojiClicked.should.be.equal('maybe');
+  });
+
+  it("should click on emojis with nested elements", function() {
+    starRating.unblockVotes();
+    let clickEvent = document.createEvent("HTMLEvents");
+    clickEvent.initEvent("click", true, true);
+    ratingEl.querySelector('span:nth-child(2)').dispatchEvent(clickEvent);
+
+    emojiClicked.should.be.equal('yep');
+  });
+
+
 
 });

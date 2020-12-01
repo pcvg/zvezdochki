@@ -144,10 +144,15 @@ export default class {
   addClickHandler() {
     this.ratingEl.addEventListener('click', ev => {
       ev.preventDefault();
+      let target;
 
-      let target = ev.target;
+      if (ev.target.dataset[this.options.starDataAttr]) {
+        target = ev.target
+      } else {
+        target = ev.target.closest(`[data-${this.options.starDataAttr}]`)
+      }
 
-      if (!target.dataset[this.options.starDataAttr]) {
+      if (!target) {
         return;
       }
 
@@ -160,6 +165,6 @@ export default class {
 
         this.blockVotes();
       }
-    }, true);
+    });
   }
 }

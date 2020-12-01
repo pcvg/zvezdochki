@@ -131,5 +131,10 @@ pre {
     margin-top: 18px;
     color: #000;
     background-color: #73E4AD;
+
+    &[disabled] {
+      background-color: #AAA;
+      cursor: default;
+    }
   }
 }

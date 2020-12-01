@@ -38,6 +38,8 @@ require("microlight");
   let unblockBtn = document.querySelector('.btn--unblock');
 
   unblockBtn.addEventListener('click', () => {
+    unblockBtn.innerText = "Unblocked";
+    unblockBtn.setAttribute('disabled', 'disabled')
     emojisRating.unblockVotes();
   });
 })();
@@ -56,7 +58,7 @@ require("microlight");
 
   new Zvezdochki(ratingEl, options);
 
-  ratingEl.addEventListener('click', ev => {
+  ratingEl.addEventListener('vote', ev => {
     output.innerText = "Clicked = " + ev.detail.star + ". \n  LocalStorage content is = " + window.localStorage.getItem('votes');
   });
 
