@@ -12,8 +12,7 @@ let testOptions = {
   starDataAttr: "emoji",
   ratingDataAttr: "rating",
   votedClassName: 'emoji-rating--blocked',
-  voted: false,
-  fingerPrint: true
+  voted: false
 };
 
 const STARS = `<div class="${testOptions.elementClass}" data-rating="hankey">

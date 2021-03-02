@@ -1,5 +1,3 @@
-import Fingerprint2 from "fingerprintjs2";
-
 export default class {
   constructor(el, options) {
     this.ratingEl = el;
@@ -11,7 +9,6 @@ export default class {
       votedClassName: 'star-rating--blocked',
       id: null,
       voted: false,
-      fingerPrint: false,
       localStorageName: null
     };
 
@@ -32,10 +29,6 @@ export default class {
   init() {
     this.setInitialRating();
 
-    if (this.options.fingerPrint) {
-      this.getFingerPrint();
-    }
-
     if (!this.isVoted()) {
       this.handleHover();
       this.addClickHandler();
@@ -49,38 +42,12 @@ export default class {
       star: star
     };
 
-    if (this.options.fingerPrint) {
-      eventData.fingerPrint = this.options.fingerPrint
-    }
-
     if (this.options.localStorageName) {
       this.addVoteToStorage();
     }
 
     let voteEvent = new CustomEvent('vote', {detail: eventData});
     this.ratingEl.dispatchEvent(voteEvent);
-  }
-
-  getFingerPrint() {
-    if (window.requestIdleCallback) {
-      requestIdleCallback(() => {
-        Fingerprint2.get(components => {
-          var values = components.map(function(component) {
-            return component.value
-          });
-          this.options.fingerPrint = Fingerprint2.x64hash128(values.join(''), 31)
-        });
-      })
-    } else {
-      setTimeout(() => {
-        Fingerprint2.get(components => {
-          var values = components.map(function(component) {
-            return component.value
-          });
-          this.options.fingerPrint = Fingerprint2.x64hash128(values.join(''), 31)
-        })
-      }, 500)
-    }
   }
 
   blockVotes() {

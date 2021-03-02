@@ -1,6 +1,6 @@
 {
   "name": "@savingsunited/zvezdochki",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "The component for easy creation of star rating components",
   "main": "dist/Zvezdochki.3283b0c3.js",
   "repository": "https://github.com/pcvg/zvezdochki",
@@ -15,12 +15,10 @@
     "lint": "yarn eslint && yarn stylelint",
     "test": "nyc mocha --require @babel/register -r jsdom-global/register -r mock-local-storage tests && yarn report-coverage",
     "report-coverage": "nyc report --reporter=text-lcov > ./coverage/lcov.info",
-    "deploy": "yarn build && gh-pages -d dist"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint && yarn build"
-    }
+    "deploy": "yarn build && gh-pages -d dist",
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   },
   "babel": {
     "presets": [
@@ -28,34 +26,32 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "@babel/preset-env": "^7.12.7",
-    "@babel/register": "^7.12.1",
-    "canvas": "^2.6.1",
-    "chai": "^4.2.0",
+    "@babel/core": "^7.13.8",
+    "@babel/preset-env": "^7.13.9",
+    "@babel/register": "^7.13.8",
+    "canvas": "^2.7.0",
+    "chai": "^4.3.0",
     "coveralls": "^3.1.0",
     "cssnano": "^4.1.10",
     "del-cli": "^3.0.1",
-    "eslint": "^7.14.0",
+    "eslint": "^7.21.0",
     "gh-pages": "^3.1.0",
-    "husky": "^4.3.0",
+    "husky": "^5.1.3",
     "jsdom": "^16.4.0",
     "jsdom-global": "^3.0.2",
     "microlight": "^0.0.7",
-    "mocha": "^8.2.1",
+    "mocha": "^8.3.0",
     "mocha-lcov-reporter": "^1.3.0",
-    "mock-local-storage": "^1.1.15",
+    "mock-local-storage": "^1.1.17",
     "node-sass": "^5.0.0",
     "nyc": "^15.1.0",
     "parcel": "^1.12.4",
-    "postcss": "^8.1.10",
+    "pinst": "^2.1.6",
+    "postcss": "^8.2.6",
     "postcss-preset-env": "^6.7.0",
-    "stylelint": "^13.8.0",
+    "stylelint": "^13.11.0",
     "stylelint-config-rational-order": "^0.1.2",
-    "stylelint-scss": "^3.18.0"
-  },
-  "peerDependencies": {
-    "postcss": "^8.1.10"
+    "stylelint-scss": "^3.19.0"
   },
   "dependencies": {
     "fingerprintjs2": "^2.1.2",
