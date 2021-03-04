@@ -1,5 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# FIXME: fails over version currently
-# npm run lint && npm run build
+npm run lint && npm run build
