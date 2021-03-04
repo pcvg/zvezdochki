@@ -1,6 +1,6 @@
 {
   "name": "@savingsunited/zvezdochki",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "description": "The component for easy creation of star rating components",
   "main": "dist/Zvezdochki.3283b0c3.js",
   "repository": "https://github.com/pcvg/zvezdochki",
@@ -13,8 +13,7 @@
     "eslint": "./node_modules/.bin/eslint src",
     "stylelint": "./node_modules/.bin/stylelint src",
     "lint": "yarn eslint && yarn stylelint",
-    "test": "nyc mocha --require @babel/register -r jsdom-global/register -r mock-local-storage tests && yarn report-coverage",
-    "report-coverage": "nyc report --reporter=text-lcov > ./coverage/lcov.info",
+    "test": "nyc mocha --require @babel/register -r jsdom-global/register -r mock-local-storage tests",
     "deploy": "yarn build && gh-pages -d dist",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
