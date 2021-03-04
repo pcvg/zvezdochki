@@ -12,12 +12,10 @@
     "build": "del-cli dist/* && parcel build src/index.html --public-url /zvezdochki --no-content-hash --no-source-maps",
     "eslint": "./node_modules/.bin/eslint src",
     "stylelint": "./node_modules/.bin/stylelint src",
-    "lint": "yarn eslint && yarn stylelint",
+    "lint": "npm run eslint && npm run stylelint",
     "test": "nyc mocha --require @babel/register -r jsdom-global/register -r mock-local-storage tests",
-    "deploy": "yarn build && gh-pages -d dist",
-    "postinstall": "husky install",
-    "prepublishOnly": "pinst --disable",
-    "postpublish": "pinst --enable"
+    "deploy": "npm run build && gh-pages -d dist",
+    "prepare": "husky install"
   },
   "babel": {
     "presets": [
@@ -45,15 +43,11 @@
     "node-sass": "^5.0.0",
     "nyc": "^15.1.0",
     "parcel": "^1.12.4",
-    "pinst": "^2.1.6",
     "postcss": "^8.2.6",
     "postcss-preset-env": "^6.7.0",
     "stylelint": "^13.11.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-scss": "^3.19.0"
   },
-  "dependencies": {
-    "fingerprintjs2": "^2.1.2",
-    "yarn": "^1.22.10"
-  }
+  "dependencies": {}
 }

@@ -10,9 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Install dependencies
-        run: yarn
+        run: npm install
       - name: Run test
-        run: yarn test
+        run: npm test
       - name: Coveralls
         uses: coverallsapp/github-action@master
         env:
@@ -26,9 +26,9 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Install dependencies
-        run: yarn
+        run: npm install
       - name: Run linters
-        run: yarn lint
+        run: npm run lint
   notify-failure:
     runs-on: ubuntu-latest
     needs: [test,linters]
