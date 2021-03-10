@@ -15,7 +15,6 @@ let testOptions = {
   ratingDataAttr: "ratingValue",
   votedClassName: 'star-rating--blocked',
   voted: false,
-  fingerPrint: true,
   id: null,
   localStorageName: 'votes'
 };

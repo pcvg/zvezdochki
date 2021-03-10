@@ -10,18 +10,18 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Install dependencies
-        run: yarn
+        run: npm install
       - name: Run test
-        run: yarn test
+        run: npm test
   linters:
     name: Run linters
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - name: Install dependencies
-        run: yarn
+        run: npm install
       - name: Run linters
-        run: yarn lint
+        run: npm run lint
   publish:
     name: Publish
     needs: [test,linters]
@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: '12.x'
           registry-url: https://registry.npmjs.org/
-      - run: yarn
+      - run: npm install
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
