@@ -50,12 +50,11 @@ More Examples and Documentation you can find on the [DEMO Page](https://pcvg.git
 
 ### Building
 
-```yarn build```
-
+    $ npm run build
 
 ### Testing
 
-```yarn test```
+    $ npm test
 
 ## License
 
