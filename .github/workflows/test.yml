@@ -10,7 +10,10 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Install dependencies
-        run: npm install
+        run: |
+          sudo apt update
+          sudo apt install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
+          npm install
       - name: Run test
         run: npm test
         env:
@@ -21,7 +24,10 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Install dependencies
-        run: npm install
+        run: |
+          sudo apt update
+          sudo apt install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
+          npm install
       - name: Run linters
         run: npm run lint
   notify-failure:

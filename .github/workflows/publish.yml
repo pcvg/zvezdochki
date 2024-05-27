@@ -10,7 +10,10 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Install dependencies
-        run: npm install
+        run: |
+          sudo apt update
+          sudo apt install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
+          npm install
       - name: Run test
         run: npm test
         env:
@@ -21,7 +24,10 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Install dependencies
-        run: npm install
+        run: |
+          sudo apt update
+          sudo apt install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
+          npm install
       - name: Run linters
         run: npm run lint
   publish:
@@ -30,10 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-          registry-url: https://registry.npmjs.org/
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
       - run: npm install
       - run: npm publish --access public
         env:
