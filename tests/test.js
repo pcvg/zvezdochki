@@ -83,6 +83,34 @@ describe('functionality', function() {
     })
   });
 
+  context('initializing with incorrect rating', function() {
+
+    before(function() {
+      const INCORRECT_RATING = `<div class="${testOptions.elementClass}" data-ratingValue="10">
+          <ul class="${testOptions.elementClass}__list">
+            <li data-star="5"></li>
+            <li data-star="4"></li>
+            <li data-star="3"></li>
+            <li data-star="2"></li>
+            <li data-star="1"></li>
+          </ul>
+        </div>`;
+      const INCORRECT_HTML = `<!DOCTYPE html><html><body>${INCORRECT_RATING}</body></html>`;
+
+      DOM = new JSDOM(INCORRECT_HTML, {resources: "usable", runScripts: "dangerously"});
+      global.window = DOM.window;
+      global.document = window.document;
+
+      starsEl = document.querySelector(`.${testOptions.elementClass}`);
+      new Zvezdochki(starsEl);
+    });
+
+    it('should highlight the first available star if rating is incorrect', function() {
+      let activeStar = document.querySelector(`.${testOptions.elementClass} .${testOptions.activeClass}`);
+      activeStar.dataset.star.should.equal('5');
+    });
+  });
+
   context('clicks', function() {
     before(function() {
       DOM = new JSDOM(HTML, {resources: "usable", runScripts: "dangerously"});

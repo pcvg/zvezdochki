@@ -2,6 +2,8 @@ export default class {
   constructor(el, options) {
     this.ratingEl = el;
 
+    this._initialRatingChecked = false;
+
     this.options = {
       activeClass: "active",
       starDataAttr: "star",
@@ -84,7 +86,13 @@ export default class {
 
   setInitialRating() {
     let initialRating = this.ratingEl.dataset[this.options.ratingDataAttr.toLowerCase()];
-    this.setActiveStar(initialRating);
+    const availableValues = Array.from(this.stars).map(star => star.dataset[this.options.starDataAttr]);
+    let validRating = availableValues.includes(initialRating) ? initialRating : availableValues[0];
+    if (!availableValues.includes(initialRating) && !this._initialRatingChecked) {
+      console.error('Incorrect rating value, set to first available:', availableValues[0]);
+      this._initialRatingChecked = true;
+    }
+    this.setActiveStar(validRating);
   }
 
   setActiveStar(rating) {
