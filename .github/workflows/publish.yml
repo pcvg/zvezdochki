@@ -46,7 +46,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
   notify:
-    name: Notify-Success
+    name: Notify
     needs: [publish]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
