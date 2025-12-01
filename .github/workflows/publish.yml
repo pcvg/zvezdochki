@@ -44,31 +44,18 @@ jobs:
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-  notify-success:
+
+  notify:
     name: Notify-Success
     needs: [publish]
-    if: success()
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - name: Notify
-        uses: pcvg/slack-notification-action@master
+        uses: pcvg/slack-notification-action@main
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-          JOB_STATUS: Success
-          TITLE_MSG_SUCCESS: "Zvezdochki published!"
-          URL_WORKFLOW: "https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks"
-          FOOTER_MSG_SUCCESS: "${{ github.actor }}'s version was published - <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
-  notify-failure:
-    name: Notify-Failure
-    needs: [publish]
-    if: failure()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify
-        uses: pcvg/slack-notification-action@master
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-          JOB_STATUS: Failure
-          TITLE_MSG_FAIL: "Publish: Workflow failed - Zvezdochki!"
-          URL_WORKFLOW: "https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks"
-          FOOTER_MSG_FAIL: "Failed - ${{ github.actor }}'s workflow in <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
+          TITLE_SUCCESS: "Zvezdochki published!"
+          BODY_SUCCESS: "${{ github.actor }}'s version was published - <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
+          TITLE_FAIL: "Publish: Workflow failed - Zvezdochki!"
+          BODY_FAIL: "Failed - ${{ github.actor }}'s workflow in <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"

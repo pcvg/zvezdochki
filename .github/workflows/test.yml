@@ -37,10 +37,8 @@ jobs:
     name: Notify-Failure
     steps:
       - name: Notify
-        uses: pcvg/slack-notification-action@master
+        uses: pcvg/slack-notification-action@main
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-          JOB_STATUS: Failure
-          TITLE_MSG_FAIL: "Workflow failed - Zvezdochki!"
-          URL_WORKFLOW: "https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks"
-          FOOTER_MSG_FAIL: "Failed - ${{ github.actor }}'s workflow in <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
+          TITLE_FAIL: "Tests: Workflow failed - Zvezdochki!"
+          BODY_FAIL: "Failed - ${{ github.actor }}'s workflow in <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
