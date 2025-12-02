@@ -32,7 +32,7 @@
     "cssnano": "^4.1.10",
     "del-cli": "^3.0.1",
     "eslint": "^7.21.0",
-    "gh-pages": "^3.1.0",
+    "gh-pages": "^5.0.0",
     "husky": "^5.1.3",
     "jsdom": "^16.4.0",
     "jsdom-global": "^3.0.2",
