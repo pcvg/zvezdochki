@@ -60,6 +60,7 @@ jobs:
       - name: Notify
         uses: pcvg/slack-notification-action@main
         with:
+          JOB_STATUS: ${{ needs.publish.status }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
           TITLE_SUCCESS: "Zvezdochki published!"
           BODY_SUCCESS: "${{ github.actor }}'s version was published - <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
