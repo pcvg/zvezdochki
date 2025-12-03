@@ -4,10 +4,6 @@ on:
     tags:
        - '*'
 
-permissions:
-  id-token: write  # Required for OIDC
-  contents: read
-
 jobs:
   test:
     name: Run tests
@@ -42,13 +38,16 @@ jobs:
     name: Publish
     needs: [test,linters]
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required for OIDC
+      contents: read
     steps:
+      - uses: actions/checkout@main
+
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
-
-      - uses: actions/checkout@main
 
       - name: Install dependencies
         run: |

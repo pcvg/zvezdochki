@@ -3,15 +3,18 @@
   "version": "2.1.2",
   "description": "The component for easy creation of star rating components",
   "main": "dist/Zvezdochki.3283b0c3.js",
-  "repository": "https://github.com/pcvg/zvezdochki",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pcvg/zvezdochki.git"
+  },
   "author": "Savings United GmbH",
   "license": "GPL-3.0",
   "private": false,
   "scripts": {
     "dev": "parcel src/index.html",
     "build": "del-cli dist/* && parcel build src/index.html --public-url /zvezdochki --no-content-hash --no-source-maps",
-    "eslint": "./node_modules/.bin/eslint src",
-    "stylelint": "./node_modules/.bin/stylelint src",
+    "eslint": "eslint src",
+    "stylelint": "stylelint src",
     "lint": "npm run eslint && npm run stylelint",
     "test": "nyc mocha --require @babel/register -r jsdom-global/register -r mock-local-storage tests && nyc report --reporter=text-lcov | coveralls",
     "deploy": "npm run build && gh-pages -d dist",
