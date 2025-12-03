@@ -27,20 +27,29 @@ jobs:
     name: Run linters
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@main
+
       - name: Install dependencies
         run: |
           sudo apt update
           sudo apt install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
           npm install
+
       - name: Run linters
         run: npm run lint
+
   publish:
     name: Publish
     needs: [test,linters]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - uses: actions/checkout@main
+
       - name: Install dependencies
         run: |
           sudo apt update
@@ -56,7 +65,7 @@ jobs:
     steps:
       - name: Notify
         uses: pcvg/slack-notification-action@main
-        env:
+        with:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
           TITLE_SUCCESS: "Zvezdochki published!"
           BODY_SUCCESS: "${{ github.actor }}'s version was published - <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"
