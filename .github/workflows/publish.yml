@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify
-        uses: pcvg/slack-notification-action@main
+        uses: pcvg/slack-notification-action@v1
         with:
           JOB_STATUS: ${{ needs.publish.status }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
