@@ -54,7 +54,7 @@ jobs:
   notify:
     name: Notify
     needs: [publish]
-    if: !cancelled()
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - name: Notify
