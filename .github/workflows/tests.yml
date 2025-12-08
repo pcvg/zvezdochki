@@ -54,24 +54,25 @@ jobs:
               body: message
             });
 
-  comment-on-success:
+  auto-merge-dependabot:
     runs-on: ubuntu-latest
     needs: [checks]
-    if: success() && github.event_name != 'workflow_dispatch' && github.actor == 'dependabot[bot]'
-    name: Comment on PR to merge this PR
+    if: success() && github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    name: Auto-merge Dependabot PR
     permissions:
+      contents: write
       pull-requests: write
     steps:
-      - name: Comment on PR
+      - name: Enable auto-merge for Dependabot PRs
         uses: actions/github-script@v7
         with:
           script: |
-            const message = `@dependabot merge`;
-
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
+            const pr = context.payload.pull_request;
+            
+            await github.rest.pulls.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: message
+              pull_number: pr.number,
+              merge_method: 'squash'
             });
 
