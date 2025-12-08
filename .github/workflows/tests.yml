@@ -22,11 +22,11 @@ jobs:
 
       - name: Run test
         if: ${{ github.actor != 'dependabot' }}
-        run: npm test-with-report
+        run: npm run test-with-report
 
       - name: Run test
         if: ${{ github.actor == 'dependabot' }}
-        run: npm test
+        run: npm run test
 
   comment-on-failure:
     runs-on: ubuntu-latest

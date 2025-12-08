@@ -20,7 +20,7 @@ jobs:
         run: npm run lint
 
       - name: Run test
-        run: npm test-with-report
+        run: npm run test-with-report
         env:
           COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
 
