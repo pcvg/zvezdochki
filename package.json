@@ -39,7 +39,7 @@
     "eslint": "^7.21.0",
     "gh-pages": "^3.1.0",
     "husky": "^5.1.3",
-    "jsdom": "^16.4.0",
+    "jsdom": "^17.0.0",
     "jsdom-global": "^3.0.2",
     "microlight": "^0.0.7",
     "mocha": "^8.3.0",
