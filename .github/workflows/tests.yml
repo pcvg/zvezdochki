@@ -21,11 +21,11 @@ jobs:
         run: npm run lint
 
       - name: Run test
-        if: ${{ github.actor != 'dependabot' }}
+        if: ${{ github.actor != 'dependabot[bot]' }}
         run: npm run test-with-report
 
       - name: Run test
-        if: ${{ github.actor == 'dependabot' }}
+        if: ${{ github.actor == 'dependabot[bot]' }}
         run: npm run test
 
   comment-on-failure:
