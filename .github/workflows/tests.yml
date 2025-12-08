@@ -17,13 +17,16 @@ jobs:
           sudo apt install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
           npm install
 
-      - name: Run test
-        run: npm test
-        env:
-          COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
-
       - name: Run linters
         run: npm run lint
+
+      - name: Run test
+        if: ${{ github.actor != 'dependabot' }}
+        run: npm test-with-report
+
+      - name: Run test
+        if: ${{ github.actor == 'dependabot' }}
+        run: npm test
 
   comment-on-failure:
     runs-on: ubuntu-latest
@@ -38,7 +41,7 @@ jobs:
         with:
           script: |
             const runUrl = `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`;
-            const message = `Tests failed, triggered by '${{ github.event_name }}' event. 🚨\n\nWorkflow run: ${runUrl}`;
+            const message = `Tests failed, triggered by '${{ github.event.action || github.event_name }}' event. 🚨\n\nWorkflow run: ${runUrl}`;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,

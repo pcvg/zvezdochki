@@ -16,7 +16,8 @@
     "eslint": "eslint src",
     "stylelint": "stylelint src",
     "lint": "npm run eslint && npm run stylelint",
-    "test": "nyc mocha --require @babel/register -r jsdom-global/register -r mock-local-storage tests && nyc report --reporter=text-lcov | coveralls",
+    "test": "nyc mocha --require @babel/register -r jsdom-global/register -r mock-local-storage tests",
+    "test-with-report": "nyc mocha --require @babel/register -r jsdom-global/register -r mock-local-storage tests && nyc report --reporter=text-lcov | coveralls",
     "deploy": "npm run build && gh-pages -d dist",
     "prepare": "husky install"
   },
