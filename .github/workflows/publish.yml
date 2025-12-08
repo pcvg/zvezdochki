@@ -5,8 +5,8 @@ on:
        - '*'
 
 jobs:
-  test:
-    name: Run tests
+  checks:
+    name: Run tests and linters
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -15,28 +15,18 @@ jobs:
           sudo apt update
           sudo apt install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
           npm install
+
       - name: Run test
         run: npm test
         env:
           COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
-  linters:
-    name: Run linters
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@main
-
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
-          npm install
 
       - name: Run linters
         run: npm run lint
 
   publish:
     name: Publish
-    needs: [test,linters]
+    needs: [checks]
     runs-on: ubuntu-latest
     permissions:
       id-token: write # Required for OIDC
@@ -56,7 +46,9 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
+
       - run: npm install
+
       - run: npm publish --access public
 
   notify:
@@ -66,8 +58,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify
-        uses: pcvg/slack-notification-action@main
+        uses: pcvg/slack-notification-action@v1
         with:
+          JOB_STATUS: ${{ needs.publish.status }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
           TITLE_SUCCESS: "Zvezdochki published!"
           BODY_SUCCESS: "${{ github.actor }}'s version was published - <https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks|${{ github.repository }}>"

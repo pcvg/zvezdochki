@@ -1,0 +1,49 @@
+name: Tests
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  checks:
+    name: Run tests and linters
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
+          npm install
+
+      - name: Run test
+        run: npm test
+        env:
+          COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
+
+      - name: Run linters
+        run: npm run lint
+
+  comment-on-failure:
+    runs-on: ubuntu-latest
+    needs: [checks]
+    if: failure() && github.event_name != 'workflow_dispatch'
+    name: Comment on PR
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const runUrl = `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`;
+            const message = `Tests failed, triggered by '${{ github.event_name }}' event. 🚨\n\nWorkflow run: ${runUrl}`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            });
+
