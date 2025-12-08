@@ -23,6 +23,8 @@ jobs:
       - name: Run test
         if: ${{ github.actor != 'dependabot[bot]' }}
         run: npm run test-with-report
+        env:
+          COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
 
       - name: Run test without report
         if: ${{ github.actor == 'dependabot[bot]' }}
@@ -68,7 +70,7 @@ jobs:
         with:
           script: |
             const pr = context.payload.pull_request;
-            
+
             await github.rest.pulls.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
