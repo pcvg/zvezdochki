@@ -41,7 +41,7 @@ jobs:
         with:
           script: |
             const runUrl = `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`;
-            const message = `Tests failed, triggered by '${{ github.event.action || github.event_name }}' event. 🚨\n\nWorkflow run: ${runUrl}`;
+            const message = `Tests failed, triggered by ${{ github.actor }} with '${{ github.event.action || github.event_name }}' event. 🚨\n\nWorkflow run: ${runUrl}`;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
