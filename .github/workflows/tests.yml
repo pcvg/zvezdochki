@@ -23,10 +23,16 @@ jobs:
       - name: Run test
         if: ${{ github.actor != 'dependabot[bot]' }}
         run: npm run test-with-report
+        env:
+          COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
 
-      - name: Run test
+      - name: Run test without report
         if: ${{ github.actor == 'dependabot[bot]' }}
         run: npm run test
+
+      - name: Run build
+        if: ${{ github.actor == 'dependabot[bot]' }}
+        run: npm run build
 
   comment-on-failure:
     runs-on: ubuntu-latest
@@ -48,5 +54,27 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: message
+            });
+
+  auto-merge-dependabot:
+    runs-on: ubuntu-latest
+    needs: [checks]
+    if: success() && github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    name: Auto-merge Dependabot PR
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Enable auto-merge for Dependabot PRs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              merge_method: 'squash'
             });
 
